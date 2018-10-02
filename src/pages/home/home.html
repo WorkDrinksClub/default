@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-navbar hideBackButton="true">
+    <ion-title>
+      <ion-icon style="padding-right: 20px" item-right (click)="loginLogout()" name="power" [color]="authService.isAuthenticated() ? 'secondary' : 'danger'"></ion-icon>
+      Work Drinks Club
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+  <div *ngIf="authService.isAuthenticated(); then authenticated">
+    <!-- template will replace this div -->
+  </div>
+
+  <!-- User logged in -->
+  <ng-template #authenticated>
+    <ion-list>
+      <user-details></user-details>
+      <inventory></inventory>
+      <members></members>
+      <add-user></add-user>
+      <changes></changes>
+    </ion-list>
+
+  </ng-template>
+</ion-content>

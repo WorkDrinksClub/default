@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "default": "work-drinks-club",
+    "test": "work-drinks-club-test"
+  }
+}

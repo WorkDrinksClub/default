@@ -1,0 +1,40 @@
+<div *ngIf="members">
+
+  <ion-list-header>
+    Members
+    <ion-icon item-right (click)="toggleMembers()" [name]="showMembers ? 'arrow-dropup' : 'arrow-dropdown'"></ion-icon>
+  </ion-list-header>
+
+  <div [hidden]="!showMembers">
+    <ion-item-sliding *ngFor="let member of members | async">
+
+      <ion-item>
+        <span item-left>{{member.name}}</span>
+        <ion-chip item-right [color]="member.supplied - member.consumed < 0 ? 'danger' : member.supplied - member.consumed == 0 ? 'primary' : 'secondary'">
+          <ion-label>{{member.supplied - member.consumed}}</ion-label>
+        </ion-chip>
+      </ion-item>
+
+      <ion-item-options side="right">
+        <button ion-button color="secondary" (click)="supply(member)">
+          <ion-icon name="add-circle"></ion-icon>
+          Supply
+        </button>
+        <button ion-button color="default" (click)="consume(member)">
+          <ion-icon name="remove-circle"></ion-icon>
+          Consume
+        </button>
+      </ion-item-options>
+
+      <ion-item-options side="left">
+        <button ion-button color="danger" (click)="removeMember(member)">
+          <ion-icon name="remove-circle"></ion-icon>
+          Remove Member
+        </button>
+      </ion-item-options>
+
+    </ion-item-sliding>
+  </div>
+  <ion-item-divider></ion-item-divider>
+
+</div>

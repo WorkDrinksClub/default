@@ -1,0 +1,22 @@
+<ion-list-header>
+  <span item-left>Add new member</span>
+  <ion-icon item-right (click)="toggleAddUserForm()" [name]="showAddUser ? 'arrow-dropup' : 'arrow-dropdown'"></ion-icon>
+</ion-list-header>
+
+<div [hidden]="!showAddUser">
+  <form [formGroup]="inviteForm" (ngSubmit)="addUser()">
+    <ion-item>
+      <ion-label fixed>Name</ion-label>
+      <ion-input formControlName="name" [(ngModel)]="name" type="text"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label fixed>Email</ion-label>
+      <ion-input formControlName="email" [(ngModel)]="email" type="email"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <button ion-button color="primary" type="submit" [disabled]="!inviteForm.valid">Add member</button>
+    </ion-item>
+  </form>
+</div>

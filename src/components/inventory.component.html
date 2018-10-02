@@ -1,0 +1,54 @@
+<div *ngIf="inventory">
+
+  <ion-list-header>
+    Inventory
+    <ion-icon item-right (click)="toggleInvDetails()" [name]="showInvDetails ? 'arrow-dropup' : 'arrow-dropdown'"></ion-icon>
+  </ion-list-header>
+
+  <ion-item>
+    <span item-left>Available</span>
+    <ion-chip item-right [color]="inventory.supplied - inventory.consumed < 5 ? 'danger' : inventory.supplied - inventory.consumed > 5 ? 'secondary' : 'primary'">
+      <ion-label>{{inventory.supplied - inventory.consumed}}</ion-label>
+    </ion-chip>
+  </ion-item>
+
+  <div [hidden]="!showInvDetails">
+    <ion-item>
+      <span item-left>Consumed</span>
+      <ion-chip item-right color="primary">
+        <ion-label>{{inventory.consumed}}</ion-label>
+      </ion-chip>
+    </ion-item>
+
+    <ion-item>
+      <span item-left>Supplied</span>
+      <ion-chip item-right color="primary">
+        <ion-label>{{inventory.supplied}}</ion-label>
+      </ion-chip>
+    </ion-item>
+
+    <ion-item-sliding *ngIf="lostAndFound">
+
+      <ion-item>
+        <span item-left>{{lostAndFound.name}}</span>
+        <ion-chip item-right color="primary">
+          <ion-label>{{lostAndFound.supplied - lostAndFound.consumed}}</ion-label>
+        </ion-chip>
+      </ion-item>
+
+      <ion-item-options side="right">
+        <button ion-button color="secondary" (click)="supply(lostAndFound)">
+          <ion-icon name="add-circle"></ion-icon>
+          Supply
+        </button>
+        <button ion-button color="default" (click)="consume(lostAndFound)">
+          <ion-icon name="remove-circle"></ion-icon>
+          Consume
+        </button>
+      </ion-item-options>
+
+    </ion-item-sliding>
+  </div>
+  <ion-item-divider></ion-item-divider>
+
+</div>

@@ -1,0 +1,51 @@
+<div *ngIf="details">
+
+  <ion-list-header>
+    Me
+    <ion-icon item-right (click)="toggleDetails()" [name]="showDetails ? 'arrow-dropup' : 'arrow-dropdown'"></ion-icon>
+  </ion-list-header>
+
+  <ion-item-sliding>
+
+    <ion-item>
+      <span item-left>{{details.name}}</span>
+      <!-- horrible workaround for numberic addition, without double negative it concatenates -->
+      <ion-chip item-right [color]="details.supplied - details.consumed - plusConsumed - -plusSupplied < 0 ? 'danger' : details.supplied - details.consumed - plusConsumed - -plusSupplied == 0 ? 'primary' : 'secondary'">
+        <!-- horrible workaround for numberic addition, without double negative it concatenates -->
+        <ion-label>{{details.supplied - details.consumed - plusConsumed - -plusSupplied}}</ion-label>
+      </ion-chip>
+    </ion-item>
+
+    <ion-item-options side="right">
+      <button ion-button color="default" (click)="consume(details)">
+        <ion-icon name="remove-circle"></ion-icon>
+        Consume
+      </button>
+    </ion-item-options>
+
+  </ion-item-sliding>
+
+  <div [hidden]="!showDetails">
+    <form [formGroup]="detailsForm" (ngSubmit)="saveDetails()">
+      <ion-item>
+        <ion-label fixed>Name</ion-label>
+        <ion-input [(ngModel)]="details.name" type="text" formControlName="name" min="1" max="30"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label item-left>Consumed: {{original?.consumed}} + </ion-label>
+        <ion-input item-right formControlName="consumed" [(ngModel)]="plusConsumed" type="number"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label item-left>Supplied: {{original?.supplied}} + </ion-label>
+        <ion-input item-right formControlName="supplied" [(ngModel)]="plusSupplied" type="number"></ion-input>
+      </ion-item>
+      <ion-item>
+        <button ion-button color="primary" type="submit" [disabled]="!detailsForm.valid">Save</button>
+        <button ion-button color="primary" type="reset" (click)=toggleDetails()>Cancel</button>
+      </ion-item>
+    </form>
+  </div>
+
+  <ion-item-divider></ion-item-divider>
+
+</div>

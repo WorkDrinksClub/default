@@ -1,0 +1,23 @@
+{
+  "name": "Work Drinks Club",
+  "short_name": "Work Drinks Club",
+  "start_url": "index.html",
+  "display": "standalone",
+  "icons": [{
+    "src": "assets/icon/wdc-icon-512.png",
+    "sizes": "512x512",
+    "type": "image/png"
+  },
+  {
+    "src": "assets/icon/wdc-icon-192.png",
+    "sizes": "192x192",
+    "type": "image/png"
+  },
+  {
+    "src": "assets/icon/wdc-icon-128.png",
+    "sizes": "128x128",
+    "type": "image/png"
+  }],
+  "background_color": "#4e8ef7",
+  "theme_color": "#4e8ef7"
+}

@@ -1,0 +1,88 @@
+<div *ngIf="changes">
+
+  <!-- NEED TO MOVE INLINE STYLE OUT AND INTO CSS -->
+  <!-- NEED TO UNDERSTAND item-right SO THAT WE CAN ALIGN TO THE RIGHT -->
+  <ion-list-header>
+    Change History
+    <ion-icon item-right (click)="toggleChanges()" [name]="showChanges ? 'arrow-dropup' : 'arrow-dropdown'"></ion-icon>
+  </ion-list-header>
+
+  <div [hidden]="!showChanges">
+    <ion-item item-left *ngFor="let change of changes | async">
+      <div *ngIf="change.type === 'i'">
+        {{change.member.name}}
+        <br>
+        <div style="font-size: smaller; padding-top: 15px">
+          <span style="padding-right: 10px">Joined the club!</span>
+          <ion-icon name="thumbs-up" color="secondary"></ion-icon>
+        </div>
+        <br>
+        <span style="font-size: x-small">
+          {{change.insertTime | date: 'dd/MM/yyyy H:mm:ss'}}
+        </span>
+      </div>
+      <div *ngIf="change.type === 'd'">
+        {{change.member.name}}
+        <br>
+        <div style="font-size: smaller; padding-top: 15px">
+          <span style="padding-right: 10px">Left the club!</span>
+          <ion-icon name="thumbs-down" color="danger"></ion-icon>
+        </div>
+        <br>
+        <span style="font-size: x-small">
+          {{change.insertTime | date: 'dd/MM/yyyy H:mm:ss'}} - Consumed: {{change.member.consumed}}, Supplied:
+          {{change.member.supplied}}
+        </span>
+      </div>
+      <div *ngIf="change.type === 'u'">
+        {{change.member.name}}
+        <br>
+        <span *ngIf="change.member.name !== change.newValues.name" style="font-size: smaller">
+          <span style="padding-right: 60px">Name</span>
+          <ion-chip item-right color="gray">
+            <span style="padding-left: 10px; padding-right: 10px">
+              {{change.member.name}}
+            </span>
+            <ion-icon name="arrow-round-forward"></ion-icon>
+            <span style="padding-left: 10px; padding-right: 10px">
+              {{change.newValues.name}}
+            </span>
+          </ion-chip>
+          <br *ngIf="change.member.consumed !== change.newValues.consumed">
+        </span>
+        <span *ngIf="change.member.consumed !== change.newValues.consumed" style="font-size: smaller">
+          <span style="padding-right: 60px">Consumed</span>
+          <ion-chip item-right color="gray">
+            <span style="padding-left: 10px; padding-right: 10px">
+              {{change.member.consumed}}
+            </span>
+            <ion-icon name="arrow-round-forward" [color]="change.newValues.supplied - change.newValues.consumed < 0 ? 'danger' : change.newValues.supplied - change.newValues.consumed == 0 ? 'primary' : 'secondary'"></ion-icon>
+            <span style="padding-left: 10px; padding-right: 10px">
+              {{change.newValues.consumed}}
+            </span>
+          </ion-chip>
+          <br *ngIf="change.member.supplied !== change.newValues.supplied">
+        </span>
+        <span *ngIf="change.member.supplied !== change.newValues.supplied" style="font-size: smaller">
+          <span style="padding-right: 60px">Supplied</span>
+          <ion-chip item-right color="gray">
+            <span style="padding-left: 10px; padding-right: 10px">
+              {{change.member.supplied}}
+            </span>
+            <ion-icon name="arrow-round-forward" [color]="change.newValues.supplied - change.newValues.consumed < 0 ? 'danger' : change.newValues.supplied - change.newValues.consumed == 0 ? 'primary' : 'secondary'"></ion-icon>
+            <span style="padding-left: 10px; padding-right: 10px">
+              {{change.newValues.supplied}}
+            </span>
+          </ion-chip>
+        </span>
+        <br>
+        <span style="font-size: x-small">
+          {{change.insertTime | date: 'dd/MM/yyyy H:mm:ss'}} - Consumed: {{change.newValues.consumed}}, Supplied:
+          {{change.newValues.supplied}}
+        </span>
+      </div>
+    </ion-item>
+
+    <ion-item-divider></ion-item-divider>
+  </div>
+</div>
